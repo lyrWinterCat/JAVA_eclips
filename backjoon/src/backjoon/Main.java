@@ -3,9 +3,32 @@ package backjoon;
 
 import java.util.Arrays;
 import java.util.Scanner;
-
-//Test Commit
 public class Main {
+
+// 백준 함수
+//    public static int NextNum(int num){
+//        int result=num;
+//        while(true){
+//            result+=num%10;
+//            if(num<10) break;
+//            num/=10;
+//        }
+//        return result;
+//    }
+//
+//    public static void main(String[] args) {
+//        int[] numList=new int[NextNum(9999)+1];
+//        for(int i=0;i<=10001;i++){
+//            numList[NextNum(i)]++;
+//        }
+//        for(int i=0;i<=10001;i++){
+//            if(numList[i]==0){
+//                System.out.println(i);
+//            }
+//        }
+//    }
+
+	
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
 		
@@ -276,3 +299,5 @@ public class Main {
 		
 	}//main
 }
+
+
