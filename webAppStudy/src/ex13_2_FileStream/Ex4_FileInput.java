@@ -17,18 +17,20 @@ public class Ex4_FileInput {
 		// 예)a토마토a , 12321, aa121aa 
 		String path = "C:\\web14_lyr\\file.txt";
 		File f = new File(path);
-		String strRead="";
-		String strRead2="";
 		
-		byte [] read = new byte[100];
-		if(f.exists()) {
+		byte [] read = new byte[(int)f.length()];
+		if(f.exists()) { //파일 경로가 올바른지
 			try {
 				FileInputStream fis = new FileInputStream(f);
-				fis.read(read);
-				String res = new String(read);
-				strRead=res;
+				fis.read(read);//fis가 읽어온 내용을 read배열에 저장
 				
+				// read 배열에 담긴 내용을 string타입으로 변경
+				String res = new String(read);
+				
+				//string check 를 null로 초기화하면 안됨. heap영역에 메모리 할당 자체가 되지 않음. 가급적이면 ""을 쓰는 것이 좋음
 				String check="";
+				
+				// 회문수 판별 반복문
 				for (int i = res.length(); i >0 ; i--) {
 					check+=res.charAt(i-1);
 				}
@@ -49,6 +51,7 @@ public class Ex4_FileInput {
 			
 		}//if
 		
+		// 여기는 영문자나 숫자일때 (한글이 아닐때 )
 		String str = "";
 		String str2 = "";
 		String path2 = "C:\\web14_lyr\\file.txt";
@@ -80,8 +83,6 @@ public class Ex4_FileInput {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		// 여기까지 comiit
 		
 		
 		
