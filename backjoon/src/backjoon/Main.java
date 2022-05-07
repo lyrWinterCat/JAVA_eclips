@@ -30,8 +30,7 @@ public class Main {
 
 	
 	public static void main(String[] args){
-		Scanner sc = new Scanner(System.in);
-		
+		Scanner sc = new Scanner(System.in);		
 		// 학생 평균 문제
 //		int num = sc.nextInt();
 //		sc.nextLine();
