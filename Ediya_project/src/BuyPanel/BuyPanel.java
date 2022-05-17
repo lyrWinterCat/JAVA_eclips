@@ -28,7 +28,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
-public class buyPanel_finish extends JFrame implements ActionListener , ItemListener{
+import Account.Sales;
+import Storage.PrMain;
+
+public class BuyPanel extends JFrame implements ActionListener , ItemListener{
 	
 	JPanel mainPanel = new JPanel(); //카페 이미지 영역
 	JPanel subPanel = new JPanel(); // 옵션선택+장바구니 영역
@@ -51,7 +54,7 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 	int cartPrice;
 	
 	// 재고관리,매출관리로 값을 넘겨줄 ArrayList
-	ArrayList<Menu> cartArray = new ArrayList<Menu>();
+	ArrayList<Menu> cartArray = new ArrayList<Menu>(); //매출관리
 	
 	//이미지 버튼 클릭시 JLabel에 넘길 카페 메뉴, 가격
 	String orderName = "";
@@ -95,10 +98,11 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 	//subPanel에 들어갈 버튼들
 	JButton addBtn = new JButton("장바구니 담기");
 	JButton emptyBtn = new JButton("비우기");
-	JButton buyBtn = new JButton("주문하기");
+	protected JButton buyBtn = new JButton("주문하기");
 	
+	public BuyPanel() {}
 	
-	public buyPanel_finish() {
+	public void startBuyPanel() {
 		Dimension menuSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize()); //컴퓨터 화면 사이즈 받아오기
 		
 		gbLayout = new GridBagLayout(); // 그리드백 레이아웃 선언
@@ -234,7 +238,7 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 		
 		// 장바구니 영역 구현하기
 		cartLabel = new JLabel("장바구니"); 
-		cartText= new JTextArea("",10,10);
+		cartText= new JTextArea("",1,1);
 		
 		cartText.setEditable(false);
 		cartPanel.setBackground(Color.white);
@@ -269,9 +273,9 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 		addGrid(gbc,emptyBtn,1,1,0.5,1);
 		addGrid(gbc,buyBtn,2,1,2,1);		
 		
+			
+		setVisible(true);	
 		
-		
-		setVisible(true);		
 	}
 	
 	// 백그리드로 영역을 주기 위한 메서드
@@ -313,11 +317,52 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 //			System.out.println(menuPrice[index]); //버튼 클릭시 메뉴에 맞는 가격 출력 확인
 			orderPrices=menuPrice[index];
 			orderMenu.setText(orderName);
-			orderPrice.setText(""+menuPrice[index]+"원");
+			orderPrice.setText(""+menuPrice[index]+"원");			
+
+			// 받은 재고에 따라 주문 가능/불가 설정			
+			 //PrMain이 실행된 이후이기 때문에 관리자 들어가서 Pr 실행을 한 후여야 함
+			if(PrMain.storage.get("원두")<=0 && (button.getName().equals("아메리카노") || button.getName().equals("카페라떼") || button.getName().equals("카라멜 마끼야또"))) {
+				JOptionPane.showMessageDialog(null, "품절입니다. 직원에게 문의해주세요.");
+				addBtn.setEnabled(false);
+				emptyBtn.setEnabled(false);
+				buyBtn.setEnabled(false);
+			}
+			if(PrMain.storage.get("우유")<=0 && (button.getName().equals("밀크셰이크"))) {
+				JOptionPane.showMessageDialog(null, "품절입니다. 직원에게 문의해주세요.");
+				addBtn.setEnabled(false);
+				emptyBtn.setEnabled(false);
+				buyBtn.setEnabled(false);
+			}
+			if(PrMain.storage.get("과일청")<=0 && (button.getName().equals("과일에이드(ice)") || button.getName().equals("과일차(hot)"))) {
+				JOptionPane.showMessageDialog(null, "품절입니다. 직원에게 문의해주세요.");
+				addBtn.setEnabled(false);
+				emptyBtn.setEnabled(false);
+				buyBtn.setEnabled(false);
+			}
+			if(PrMain.storage.get("머핀")<=0 && (button.getName().equals("머핀"))) {
+				JOptionPane.showMessageDialog(null, "품절입니다. 직원에게 문의해주세요.");
+				addBtn.setEnabled(false);
+				emptyBtn.setEnabled(false);
+				buyBtn.setEnabled(false);
+			}
+			if(PrMain.storage.get("베이글")<=0 && (button.getName().equals("베이글"))) {
+				JOptionPane.showMessageDialog(null, "품절입니다. 직원에게 문의해주세요.");
+				addBtn.setEnabled(false);
+				emptyBtn.setEnabled(false);
+				buyBtn.setEnabled(false);
+			}
+			if(PrMain.storage.get("치즈스틱케이크")<=0 && (button.getName().equals("치즈스틱케이크"))) {
+				JOptionPane.showMessageDialog(null, "품절입니다. 직원에게 문의해주세요.");
+				addBtn.setEnabled(false);
+				emptyBtn.setEnabled(false);
+				buyBtn.setEnabled(false);
+			}
 			
 			// 메뉴 이미지 클릭시 맞는 옵션 라디오박스만 활성화
 			switch(button.getName()) {
 			case "아메리카노": case "카페라떼": case "카라멜 마끼야또":
+				System.out.println(PrMain.storage.get("원두"));
+				
 				for (int i = 0; i < drinkSelect.length; i++) {
 					drinkSelect[i].setEnabled(true);
 					coffeeSelect[i].setEnabled(true);
@@ -326,6 +371,7 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 				}
 				break;
 			case "밀크셰이크":
+				System.out.println(PrMain.storage.get("우유"));
 				for (int i = 0; i < drinkSelect.length; i++) {
 					drinkSelect[i].setEnabled(true);
 					coffeeSelect[i].setEnabled(false);
@@ -334,6 +380,7 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 				}
 				break;
 			case "과일에이드(ice)": case "과일차(hot)":
+				System.out.println(PrMain.storage.get("과일청"));
 				for (int i = 0; i < drinkSelect.length; i++) {
 					drinkSelect[i].setEnabled(true);
 					coffeeSelect[i].setEnabled(false);
@@ -342,7 +389,26 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 				}
 				break;
 				
-			case "베이글": case "머핀": case "치즈스틱케이크":
+			case "베이글": 
+				System.out.println(PrMain.storage.get("베이글"));
+				for (int i = 0; i < drinkSelect.length; i++) {
+					drinkSelect[i].setEnabled(false);
+					coffeeSelect[i].setEnabled(false);
+					adeTeaSelect[i].setEnabled(false);
+					bakerySelect[i].setEnabled(true);
+				}
+				break;
+			case "머핀": 
+				System.out.println(PrMain.storage.get("머핀"));
+				for (int i = 0; i < drinkSelect.length; i++) {
+					drinkSelect[i].setEnabled(false);
+					coffeeSelect[i].setEnabled(false);
+					adeTeaSelect[i].setEnabled(false);
+					bakerySelect[i].setEnabled(true);
+				}
+				break;
+			case "치즈스틱케이크":
+				System.out.println(PrMain.storage.get("치즈스틱케이크"));
 				for (int i = 0; i < drinkSelect.length; i++) {
 					drinkSelect[i].setEnabled(false);
 					coffeeSelect[i].setEnabled(false);
@@ -410,7 +476,7 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 					}
 				}
 				break;
-			case "베이글": case "머핀": case "치즈스틱케이크":
+			case "베이글": case "머핀" : case "치즈스틱케이크" :
 				for (int i = 0; i < drinkSelect.length; i++) {
 					if(bakerySelect[i].isSelected()) {
 						orderOptions += bakerySelect[i].getActionCommand()+" ";
@@ -440,11 +506,10 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 				}
 				String result="";
 				for (Menu menu : cartArray) {
-					result+=menu.name+""+menu.options+" "+menu.totalPrice+" "+menu.productNum+"\n";
+					result+="* "+menu.name+" "+menu.options+" "+menu.totalPrice+"원 \n수량 : "+menu.productNum+"\n";
 				}
 				cartText.setText(result); 
-			}
-						
+			}						
 		}
 		
 		// 비우기 버튼 클릭
@@ -457,31 +522,100 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 		}
 		
 		// 주문하기 버튼 클릭
-		// 여기서 주문 내역을 매출관리 / 재고관리로 넘겨주기
+		// 여기서 cartArray에 담긴 주문 내역을 매출관리 / 재고관리로 넘겨주기
 		String printOrder="";
 		if(e.getActionCommand().equals("주문하기")) {
 
 			// cartArray 넘겨주기
-			// message 창으로 주문 내역 보여주기
-			int payPrice=0;
-			for (int i = 0; i < cartArray.size(); i++) {
-				printOrder+="* "+cartArray.get(i).name+"\n"
-						+"옵션 : "+cartArray.get(i).options+"   수량 : "+cartArray.get(i).productNum
-						+"\n"+"가격 : "+cartArray.get(i).totalPrice+"원\n";
-				payPrice+=cartArray.get(i).totalPrice;
-			}			
-			orderNum++;
-			JOptionPane.showMessageDialog(null,
-					printOrder+"-----------------------------------------------------------------\n"
-							+"주문이 완료되었습니다.\n 대기번호 : "+orderNum+"\n결제 금액 : "+payPrice+"원","주문 내역",JOptionPane.PLAIN_MESSAGE);
+			// 매출관리로 cartArray 넘겨주기
+//			sales.order(cartArray);
 			
+			boolean is_buy=true;
+			// 주문시 받은 재고 줄어들게...하고 다시 넘기면 될 것 같은데 일단 여기서만 구현을 좀 해보고시픈데오또카지
+			for (int i = 0; i < cartArray.size(); i++) {
+				if(cartArray.get(i).name.equals("아메리카노")||(cartArray.get(i).name.equals("카페라떼")||(cartArray.get(i).name.equals("카라멜 마끼야또")))) {
+					int coffeeN=PrMain.storage.get("원두");
+					coffeeN-=cartArray.get(i).productNum;
+					PrMain.storage.put("원두",coffeeN);
+					if(coffeeN<cartArray.get(i).productNum) {
+						is_buy=false;
+						JOptionPane.showMessageDialog(null, "재고가 부족합니다. 직원에게 문의해주세요.");
+					}
+				}
+				if(cartArray.get(i).name.equals("밀크셰이크")) {
+					int milkN = PrMain.storage.get("우유");
+					milkN -= cartArray.get(i).productNum;
+					PrMain.storage.put("우유",milkN);
+					if(milkN<cartArray.get(i).productNum) {
+						is_buy=false;
+						JOptionPane.showMessageDialog(null, "재고가 부족합니다. 직원에게 문의해주세요.");
+					}
+				}
+				if(cartArray.get(i).name.equals("과일에이드(ice)")||cartArray.get(i).name.equals("과일차(hot)")) {
+					int fruitN = PrMain.storage.get("과일청");
+					fruitN-=cartArray.get(i).productNum;
+					PrMain.storage.put("과일청",fruitN);
+					if(fruitN<cartArray.get(i).productNum) {
+						is_buy=false;
+						JOptionPane.showMessageDialog(null, "재고가 부족합니다. 직원에게 문의해주세요.");
+					}
+				}
+				if(cartArray.get(i).name.equals("베이글")) {
+					int bagleN = PrMain.storage.get("베이글");
+					bagleN -= cartArray.get(i).productNum;
+					PrMain.storage.put("베이글",bagleN);
+					if(bagleN<cartArray.get(i).productNum) {
+						is_buy=false;
+						JOptionPane.showMessageDialog(null, "재고가 부족합니다. 직원에게 문의해주세요.");
+					}
+				}
+				if(cartArray.get(i).name.equals("머핀")) {
+					int muffinN = PrMain.storage.get("머핀");
+					muffinN -= cartArray.get(i).productNum;
+					PrMain.storage.put("머핀",muffinN);
+					if(muffinN<cartArray.get(i).productNum) {
+						is_buy=false;
+						JOptionPane.showMessageDialog(null, "재고가 부족합니다. 직원에게 문의해주세요.");
+					}
+				}
+				if(cartArray.get(i).name.equals("치즈스틱케이크")) {
+					int cakeN = PrMain.storage.get("치즈스틱케이크");
+					cakeN -= cartArray.get(i).productNum;
+					PrMain.storage.put("치즈스틱케이크",cakeN);
+					if(cakeN<cartArray.get(i).productNum) {
+						is_buy=false;
+						JOptionPane.showMessageDialog(null, "재고가 부족합니다. 직원에게 문의해주세요.");
+					}
+				}
+			}
+
+			
+			// message 창으로 주문 내역 보여주기
+			if(is_buy) {
+				int payPrice=0;
+				for (int i = 0; i < cartArray.size(); i++) {
+					printOrder+="* "+cartArray.get(i).name+"\n"
+							+"옵션 : "+cartArray.get(i).options+"   수량 : "+cartArray.get(i).productNum
+							+"\n"+"가격 : "+cartArray.get(i).totalPrice+"원\n";
+					payPrice+=cartArray.get(i).totalPrice*cartArray.get(i).productNum;
+				}			
+				orderNum++;
+				JOptionPane.showMessageDialog(null,
+						printOrder+"-----------------------------------------------------------------\n"
+								+"주문이 완료되었습니다.\n 대기번호 : "+orderNum+"\n결제 금액 : "+payPrice+"원","주문 내역",JOptionPane.PLAIN_MESSAGE);
+				
+			}
 			// 설정 초기화
+			Test.setMenus(cartArray);
 			cartArray.clear();
 			cartText.setText("");
 			addBtn.setEnabled(false);
 			emptyBtn.setEnabled(false);
 			buyBtn.setEnabled(false);
-		}		
+		}	
+	}
+	public ArrayList<Menu> getCartArray() {
+		return cartArray;
 	}
 	
 	@Override
@@ -493,6 +627,6 @@ public class buyPanel_finish extends JFrame implements ActionListener , ItemList
 	}
 	
 	public static void main(String[] args) {
-		new buyPanel_finish();
+		new BuyPanel();
 	}
 }
