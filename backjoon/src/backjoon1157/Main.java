@@ -32,11 +32,13 @@ public class Main {
 				max=abcN[i];
 				index=i;
 			}
+		}
+		for (int i = 0; i < abcN.length; i++) {
 			if(max==abcN[i]) {
 				cnt++;
 			}
-			
 		}
+		
 		if(cnt>1) {
 			System.out.println("?");
 		}else {
