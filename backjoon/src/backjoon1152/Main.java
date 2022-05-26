@@ -7,8 +7,13 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		String sentence = sc.nextLine();
 //		sc.nextLine();
-		sentence=sentence.trim();
-		String[] space_Div = sentence.split(" ");
-		System.out.println(space_Div.length);
+		if(sentence.equals(" ")) {
+			System.out.println(0);
+		} else {
+			sentence=sentence.trim();
+			String[] space_Div = sentence.split(" ");
+			System.out.println(space_Div.length);
+			
+		}
 	}
 }
