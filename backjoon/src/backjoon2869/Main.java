@@ -6,18 +6,17 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
-		int up, down, hight;
+		long up, down, hight;
 		up=sc.nextInt();
 		down=sc.nextInt();
 		hight=sc.nextInt();
 		
-		int day;
-		day=(hight-up)/(up-down)+1;
+
+		long day=(hight-down)/(up-down);
 		
-		if((hight-up)>(up-down)) {
-			System.out.println(day);
-		}else {
-			System.out.println(day+1);
-		}		
+		if((hight-up)%(up-down)!=0) {
+			day++;
+		}
+		System.out.println(day);
 	}
 }
