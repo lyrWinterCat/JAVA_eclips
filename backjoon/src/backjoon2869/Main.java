@@ -12,18 +12,12 @@ public class Main {
 		hight=sc.nextInt();
 		
 		int day;
-//		day=(int) Math.floor((float)(hight/(up-down)));
-		
-		day=(int) Math.floor((float)(hight-up)/(up-down))+1;
+		day=(hight-up)/(up-down)+1;
 		
 		if((hight-up)>(up-down)) {
 			System.out.println(day);
 		}else {
 			System.out.println(day+1);
-		}
-
-		
-		
+		}		
 	}
-
 }
