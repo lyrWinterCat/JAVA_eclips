@@ -1,22 +1,28 @@
 package backjoon2869;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws IOException {
 		
-		long up, down, hight;
-		up=sc.nextInt();
-		down=sc.nextInt();
-		hight=sc.nextInt();
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		String s = bf.readLine();
+		StringTokenizer st = new StringTokenizer(s);
+		int up = Integer.parseInt(st.nextToken());
+		int down = Integer.parseInt(st.nextToken());
+		int hight = Integer.parseInt(st.nextToken());		
 		
-
 		long day=(hight-down)/(up-down);
 		
-		if((hight-up)%(up-down)!=0) {
+		if((hight-down)%(up-down)!=0) {
 			day++;
+			System.out.println(day);
+		}else {
+			System.out.println(day);
 		}
-		System.out.println(day);
 	}
 }
