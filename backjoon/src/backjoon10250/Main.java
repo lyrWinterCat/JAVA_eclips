@@ -11,26 +11,22 @@ public class Main {
 			int floor=sc.nextInt();
 			int room=sc.nextInt();
 			int guest=sc.nextInt();
-			int gFloor=0;
-			int ho=0;
 			
-			int cnt=1;
-			int wguest=guest;
-			int wfloor=floor;
-			while((wguest-wfloor)>wfloor) {
-				cnt++;
-				wguest-=wfloor;	
-			}
-			
-			if(guest-(floor*cnt)==0) {
-				gFloor=floor;
+			int gFloor;
+			if(guest%floor==0) {
+				gFloor=floor*100;
 			}else {
-				gFloor=guest-(floor*cnt);				
+				gFloor=guest%floor*100;				
 			}
-			ho=cnt+1;
-			String sHo=String.format("%02d", ho);			
 			
-			System.out.println(""+gFloor+sHo);
-		}		
+			int ho;
+			if(guest%floor==0) {
+				ho=guest/floor;
+			}else {
+				ho=(guest/floor)+1;				
+			}
+			System.out.println(gFloor+ho);
+		}
+		
 	}
 }
