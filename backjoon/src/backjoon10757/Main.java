@@ -1,5 +1,6 @@
 package backjoon10757;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +9,8 @@ public class Main {
 		
 		long a = sc.nextLong();
 		long b = sc.nextLong();
+		
+		BigInteger bigN=new BigInteger();
 		System.out.println(a+b);		
 	}
 }
