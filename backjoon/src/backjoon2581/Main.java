@@ -17,17 +17,21 @@ public class Main {
 		
 		for (int i = m; i <=n; i++) {
 			boolean isCheck=false;
+			
 			for (int j = 2; j < i; j++) {
 				if(i%j==0) {
 					isCheck=true;
 					break;
 				}
 			}
-			if(!isCheck) {
+			if(!isCheck && i!=1) {
 				nList.add(i);
 			}
 		}
-		if(nList.size()!=0) {
+		
+		
+		if(nList.size()!=0) {	
+//			System.out.println(nList);
 			int sum=nList.parallelStream().mapToInt(Integer::intValue).sum();
 			int min=Collections.min(nList);
 			System.out.println(sum);
