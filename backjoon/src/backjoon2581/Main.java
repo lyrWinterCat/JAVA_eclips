@@ -28,8 +28,9 @@ public class Main {
 			}
 		}
 		if(nList.size()!=0) {
-			System.out.println(nList.stream().reduce(0,Integer::sum));
+			int sum=nList.parallelStream().mapToInt(Integer::intValue).sum();
 			int min=Collections.min(nList);
+			System.out.println(sum);
 			System.out.println(min);
 		}else {
 			System.out.println(-1);
