@@ -12,29 +12,42 @@ public class Main {
 		for (int k = 0; k < n; k++) {
 			List<Integer> sNum=new ArrayList<>();
 			int num=sc.nextInt();
-			//입력한 수보다 작은 소수들
-			// 소수들의 합이 num이 되면 됨
-			for (int i = 2; i < num; i++) {
-				boolean isCheck=false;
-				for (int j = 2; j < i; j++) {
-					if(i%j==0) {
-						isCheck=true;
-					}
-				}
-				if(!isCheck) {
-					sNum.add(i);
-				}
-			}//소수for
-			int a=0;
-			int b=0;
-			
-			for (int i = sNum.size()/2; i < sNum.size(); i++) {
-				if(sNum.contains(num-sNum.get(i-1))){
-					b=sNum.get(i-1);
-					a=num-b;
+
+			//num보다 작은 소수 배열에 저장
+			int [] arrInt = new int[num+1];
+			int i,j;
+			for (i=0; i<=num; i++) arrInt[i]=0; arrInt[1]=1;
+			for (i=2; i<=num; i++) {
+				for(j=2; i*j<=num; j++) {
+					arrInt[i*j]=1;
 				}
 			}
-			System.out.println(a+" "+b);
+			
+			for(i=2; i<=num; i++) {
+				if(arrInt[i]!=1) sNum.add(i);
+			}	
+			
+			System.out.println(sNum);
+			
+			//파티션 구하기
+			int a=0;
+			int b=0;
+//			for (int m = 0; m <sNum.size(); m++) {
+//				if(sNum.get(m)>=num/2 && sNum.contains(sNum.get(m))){
+//					b=sNum.get(m);
+//					a=num-b;
+//				}
+//			}
+			//for 문 다시생각하기
+			
+			if(a>b) {
+				System.out.println(b+" "+a);				
+			} else if(b>a) {
+				System.out.println(a+" "+b);
+			} else if(b==a){
+				System.out.println(b+" "+a);
+			}
+			
 		}//for
 	}
 }
