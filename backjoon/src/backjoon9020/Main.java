@@ -32,13 +32,29 @@ public class Main {
 			//파티션 구하기
 			int a=0;
 			int b=0;
-//			for (int m = 0; m <sNum.size(); m++) {
-//				if(sNum.get(m)>=num/2 && sNum.contains(sNum.get(m))){
-//					b=sNum.get(m);
-//					a=num-b;
-//				}
-//			}
-			//for 문 다시생각하기
+			
+			if(num==4) {
+				a=2;
+				b=2;
+			} else {
+				//소수 개수가 짝수일때
+				if(sNum.size()%2==0) {
+					for (int m = sNum.size()/2-1; m <sNum.size(); m++) {
+						if(sNum.contains(sNum.get(m))&&sNum.contains(num-sNum.get(m))){
+							a=sNum.get(m-1);
+							b=num-a;
+						}
+					}					
+				}else {
+					// 소수 개수가 홀수일때
+					for (int m = sNum.size()/2-1; m <sNum.size(); m++) {
+						if(sNum.contains(sNum.get(m))&&sNum.contains(num-sNum.get(m))){
+							a=sNum.get(m);
+							b=num-a;
+						}
+					}
+				}				
+			}
 			
 			if(a>b) {
 				System.out.println(b+" "+a);				
