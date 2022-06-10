@@ -13,13 +13,12 @@ public class Main {
 			return 1;
 		}
 		
-		sum+=fivo(n-1)+fivo(n-2);
 		
-		return sum;
+		return fivo(n-1)+fivo(n-2);
 	}
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println(sc.nextInt());
+		System.out.println(fivo(sc.nextInt()));
 	}
 
 }
